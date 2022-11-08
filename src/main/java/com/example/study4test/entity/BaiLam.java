@@ -26,4 +26,8 @@ public class BaiLam extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dethi_id")
     private DeThi deThi;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users users;
+
 }

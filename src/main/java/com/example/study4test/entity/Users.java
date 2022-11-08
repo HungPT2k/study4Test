@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Data // Create getters and setters
@@ -22,4 +23,8 @@ public class Users extends BaseEntity{
 
   @Enumerated(EnumType.ORDINAL)
   private UserRole userRole;
+  @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+  private Collection<DeThi> deThis;
+  @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+  private Collection<BaiLam> baiLams;
 }

@@ -1,6 +1,7 @@
 package com.example.study4test.serviceIml;
 
 import com.example.study4test.entity.DeThi;
+import com.example.study4test.repository.UserRepository;
 import com.example.study4test.repository.deThiRepository;
 import com.example.study4test.service.DeThiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import java.util.List;
 public class DeThiIml implements DeThiService {
     @Autowired
     private deThiRepository deThiRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public List<DeThi> getAllDe() {
         return deThiRepository.findAll();
@@ -21,7 +24,7 @@ public class DeThiIml implements DeThiService {
 
 
     @Override
-    public void Createde(MultipartFile file, MultipartFile file2, String soP) throws IOException {
+    public void Createde(MultipartFile file, MultipartFile file2, String soP,Long idU) throws IOException {
         String thangDiem = new String(file.getBytes());
         String[] lines1 = thangDiem.split("\\r\\n");
         int i = 0;
@@ -40,6 +43,6 @@ public class DeThiIml implements DeThiService {
         }
         System.out.println(resul1);
         System.out.println(resul2);
-        deThiRepository.save(new DeThi(resul2,soP,resul1,null,null));
+        deThiRepository.save(new DeThi(resul2,soP,resul1,null,null,userRepository.getById(idU)));
     }
 }

@@ -2,6 +2,7 @@ package com.example.study4test.serviceIml;
 
 import com.example.study4test.entity.BaiLam;
 import com.example.study4test.repository.BaiLamRepository;
+import com.example.study4test.repository.UserRepository;
 import com.example.study4test.repository.deThiRepository;
 import com.example.study4test.service.BaiLamService;
 import com.example.study4test.service.DeThiService;
@@ -29,6 +30,8 @@ public class BaiLamIml implements BaiLamService {
     @Autowired
     @Lazy // tránh phụ thuộc vòng;
     private BaiLamService baiLamService;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public String start() {
         String d1;
@@ -57,7 +60,7 @@ public class BaiLamIml implements BaiLamService {
         Instant instant = Instant.now();
         // use toString() method to convert instant object into String
         end = instant.toString();
-        baiLamRepository.save(new BaiLam("start "+start+" end "+end,resul,deThiRepository.getById(idDe)));
+        baiLamRepository.save(new BaiLam("start "+start+" end "+end,resul,deThiRepository.getById(idDe),userRepository.getById(idU)));
         System.out.println(resul);
     }
 

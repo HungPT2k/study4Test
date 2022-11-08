@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface DeThiService {
     List<DeThi> getAllDe();
-    void Createde(MultipartFile file,MultipartFile file2,String soP) throws IOException;
+    void Createde(MultipartFile file,MultipartFile file2,String soP,Long id) throws IOException;
 }

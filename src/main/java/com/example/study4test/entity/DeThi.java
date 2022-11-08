@@ -18,9 +18,9 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeThi extends BaseEntity{
+public class DeThi extends BaseEntity {
 
-   private String dapAnDung;
+    private String dapAnDung;
     private String soLuongPhan;
     @Column(name = "thang_diem", columnDefinition = "TEXT NOT NULL")
     private String thangDiem;
@@ -28,5 +28,8 @@ public class DeThi extends BaseEntity{
     private Collection<BaiLam> baiLams;
     @OneToMany(mappedBy = "deThi", fetch = FetchType.LAZY)
     private Collection<NhomCauHoi> nhomCauHois;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users users;
 
 }
