@@ -16,4 +16,13 @@ public class BaiLamController {
     public void getInfoFile(@RequestPart MultipartFile file, @RequestParam(name = "idU") Long idU, @RequestParam(name = "idD") Long idD) throws IOException {
         baiLamService.readFile(file,idU,idD);
     }
+    @GetMapping("/ketQua/{idb}")
+    public void getKetQua(@PathVariable(name = "idb") Long idb) throws IOException {
+        baiLamService.KetQua(idb);
+    }
+    @GetMapping("/start")
+    public void lamBai(){
+        baiLamService.start();
+    }
 }
+

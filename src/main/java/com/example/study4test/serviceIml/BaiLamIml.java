@@ -4,14 +4,21 @@ import com.example.study4test.entity.BaiLam;
 import com.example.study4test.repository.BaiLamRepository;
 import com.example.study4test.repository.deThiRepository;
 import com.example.study4test.service.BaiLamService;
+import com.example.study4test.service.DeThiService;
+import org.apache.el.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.TimeZone;
 
 @Service
 public class BaiLamIml implements BaiLamService {
@@ -19,6 +26,20 @@ public class BaiLamIml implements BaiLamService {
     private BaiLamRepository baiLamRepository;
     @Autowired
     private deThiRepository  deThiRepository;
+    @Autowired
+    @Lazy // tránh phụ thuộc vòng;
+    private BaiLamService baiLamService;
+    @Override
+    public String start() {
+        String d1;
+        // create an instance of Instant class for getting current UTC time
+        Instant instant = Instant.now();
+        // use toString() method to convert instant object into String
+        d1 = instant.toString();
+        // pass UTC date to main method.
+        return d1;
+
+}
 
     @Override
     public void readFile(MultipartFile file,Long idU, Long idDe) throws IOException {
@@ -27,58 +48,51 @@ public class BaiLamIml implements BaiLamService {
         int i = 0;
         String resul = "";
         while (i < lines.length) {
-            resul += lines[i].concat("|");
+            resul += lines[i].concat(" ");
             i++;
         }
-        baiLamRepository.save(new BaiLam(null,resul,deThiRepository.getById(idDe)));
+       String start= baiLamService.start();
+        String end;
+        // create an instance of Instant class for getting current UTC time
+        Instant instant = Instant.now();
+        // use toString() method to convert instant object into String
+        end = instant.toString();
+        baiLamRepository.save(new BaiLam("start "+start+" end "+end,resul,deThiRepository.getById(idDe)));
         System.out.println(resul);
-//        LinkedHashMap<String,String> listDa= new LinkedHashMap<>();
-//        int i = 0;
-//        while (i < lines.length) {
-//            String[] x=lines[i].split("\\.");
-//           listDa.put(x[0],x[1]);
-//           i++;
-//        }
-//        Set<String> keySet = listDa.keySet();
-//        for (String key : keySet) {
-//            System.out.println(key + " - " + listDa.get(key));
-//        }
-//        System.out.println(listDa);
-//    }
     }
 
     @Override
     public void KetQua(Long idB) throws IOException {
       String baiLam=  baiLamRepository.getById(idB).getCauTraLoi();
       String daAn = baiLamRepository.getById(idB).getDeThi().getDapAnDung();
-      String thangDiem = baiLamRepository.getById(idB).getDeThi().getDapAnDung();
+      String thangDiem = baiLamRepository.getById(idB).getDeThi().getThangDiem();
         LinkedHashMap<String,String> ThangDoc= new LinkedHashMap<>();
         LinkedHashMap<String,String> ThangNghe= new LinkedHashMap<>();
         LinkedHashMap<String,String> daNghe= new LinkedHashMap<>();
         LinkedHashMap<String,String> daDoc= new LinkedHashMap<>();
         LinkedHashMap<String,String> listDoc= new LinkedHashMap<>();
         LinkedHashMap<String,String> listNghe= new LinkedHashMap<>();
-        String[] content1=baiLam.split("|");
-        String[] content2=daAn.split("|");
-        String[] content3=thangDiem.split("|");
-        for( String a:content1){
-            String[] x= a.split(".");
+        String[] content1=baiLam.split("\\s+");
+        String[] content2=daAn.split("\\s+");
+        String[] content3=thangDiem.split("\\s+");
+        for(int i=0 ; i<content1.length-1;i++){
+            String[] x= content1[i].split("\\.");
             if(Integer.parseInt(x[0])<=100)
             {
                 listNghe.put(x[0],x[1]);
             }
             else listDoc.put(x[0],x[1]);
         }
-        for( String a:content2){
-            String[] x= a.split(".");
+        for(int i=0 ; i<content2.length-1;i++){
+            String[] x= content2[i].split("\\.");
             if(Integer.parseInt(x[0])<=100)
             {
                 daNghe.put(x[0],x[1]);
             }
             else daDoc.put(x[0],x[1]);
         }
-        for( String a:content3){
-            String[] x= a.split(".");
+        for(int i=0 ; i<content3.length-1;i++){
+            String[] x= content3[i].split("\\.");
             ThangNghe.put(x[0],x[1]);
             ThangDoc.put(x[0],x[2]);
         }
@@ -94,15 +108,17 @@ public class BaiLamIml implements BaiLamService {
         Set<String> set3=ThangDoc.keySet();
         for(String x:set3){
             if(nghe==Integer.parseInt(x)) {
-                System.out.println("Đúng"+nghe+"câu nghe dat" + ThangNghe.get(x)+ "diem nghe");
+                System.out.println("Đúng "+nghe+" câu nghe dat " + ThangNghe.get(x)+ " diem nghe");
                 break;
             }
         }
         for(String x:set3){
             if(doc==Integer.parseInt(x)) {
-                System.out.println("Đúng"+doc+"câu doc dat" + ThangDoc.get(x)+ "diem doc");
+                System.out.println("Đúng "+doc+" câu doc dat " + ThangDoc.get(x)+ " diem doc");
                 break;
             }
         }
     }
+
+
 }

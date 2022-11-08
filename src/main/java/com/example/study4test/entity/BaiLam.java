@@ -21,7 +21,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaiLam extends BaseEntity{
-    private Date thoiGian;
+    private String thoiGian;
   private String cauTraLoi;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dethi_id")

@@ -27,7 +27,7 @@ public class DeThiIml implements DeThiService {
         int i = 0;
         String resul1 = "";
         while (i < lines1.length) {
-            resul1 += lines1[i].concat("|");
+            resul1 += lines1[i].concat(" ");
             i++;
         }
         String dapAn = new String(file2.getBytes());
@@ -35,7 +35,7 @@ public class DeThiIml implements DeThiService {
         int j = 0;
         String resul2 = "";
         while (j < lines2.length) {
-            resul2 += lines2[j].concat("|");
+            resul2 += lines2[j].concat(" ");
             j++;
         }
         System.out.println(resul1);
