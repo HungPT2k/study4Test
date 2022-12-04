@@ -10,12 +10,13 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DapAn extends BaseEntity{
+public class ResultDetail  extends BaseEntity{
+
+
 
     private int stt;
-    private String noiDung;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cauhoi_id")
-    private CauHoi cauHoi;
+   // @Type(type = "jsonb")
+   // private List<String> da;
+   private String da;
 
 }

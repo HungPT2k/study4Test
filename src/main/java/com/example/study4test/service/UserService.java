@@ -1,12 +1,17 @@
 package com.example.study4test.service;
 
+import com.example.study4test.contains.ResponseCommon;
+import com.example.study4test.dto.UserRequestDTO;
+import com.example.study4test.dto.UserResponseDTO;
 import com.example.study4test.entity.Users;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UserService {
-    public String signin(String username, String password) ;
+
+    UserResponseDTO signin(UserRequestDTO userRequest);
+
     public String signup(Users appUser);
     public void delete(String username);
     public Users search(String username);

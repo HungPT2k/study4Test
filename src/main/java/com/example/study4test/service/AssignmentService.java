@@ -1,14 +1,12 @@
 package com.example.study4test.service;
 
-import lombok.Data;
-import org.apache.el.parser.ParseException;
+import com.example.study4test.contains.ResponseResultFinal;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.sql.Date;
 
-public interface BaiLamService {
+public interface AssignmentService {
     void readFile(MultipartFile file,Long idU, Long idDe) throws IOException;
-    void KetQua(Long idB) throws IOException;
+    ResponseResultFinal ResultFinal(Long idB) throws IOException;
     String start() ;
 }

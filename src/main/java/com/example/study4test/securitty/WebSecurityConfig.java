@@ -12,6 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -19,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
@@ -30,12 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/users/**").permitAll()
-                .antMatchers("/de/**").permitAll()
-                .antMatchers("/baiLam/**").permitAll()
-                .antMatchers("/baiLam/**").permitAll()
-                .antMatchers("/users/**").permitAll()
-//                .antMatchers("/users/signup").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/api/**").permitAll()
+                .anyRequest().permitAll();
         http.exceptionHandling().accessDeniedPage("/login");
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
     }
@@ -49,4 +52,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 }

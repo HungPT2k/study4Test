@@ -1,5 +1,6 @@
 package com.example.study4test.securitty;
 
+//import com.example.study4test.entity.UserRole;
 import com.example.study4test.entity.UserRole;
 import com.example.study4test.exception.customException;
 import io.jsonwebtoken.Claims;
@@ -34,10 +35,13 @@ public class JwtTokenProvider {
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
-    public String createToken(String username, UserRole appUserRoles) {
+    public String createToken(String username, List<UserRole> listRole) {
 
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("auth", appUserRoles.getAuthority());
+        claims.put("auth",listRole.stream()
+                .map(s -> new SimpleGrantedAuthority(s.getAuthority()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);

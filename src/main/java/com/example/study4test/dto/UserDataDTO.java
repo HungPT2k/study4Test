@@ -1,4 +1,5 @@
 package com.example.study4test.dto;
+//import com.example.study4test.entity.UserRole;
 import com.example.study4test.entity.UserRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,6 @@ public class UserDataDTO {
   private String email;
 
   private String password;
-
-  private UserRole userRole;
+//private String role;
+  private List<UserRole> userRole;
 }

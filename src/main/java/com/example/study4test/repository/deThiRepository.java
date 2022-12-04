@@ -1,7 +1,7 @@
 package com.example.study4test.repository;
 
-import com.example.study4test.entity.DeThi;
+import com.example.study4test.entity.Exam;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface deThiRepository extends JpaRepository<DeThi,Long> {
+public interface deThiRepository extends JpaRepository<Exam,Long> {
 }

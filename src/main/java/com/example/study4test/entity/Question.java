@@ -5,19 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CauHoi extends BaseEntity {
+public class Question extends BaseEntity  {
     private int stt;
     private String texts;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nhomcauhoi_id")
-    private NhomCauHoi nhomCauHoi;
-    @OneToMany(mappedBy = "cauHoi", fetch = FetchType.LAZY)
-    private Collection<DapAn> dapAns;
+    private Part nhomCauHoi;
+    private String daAn1;
+    private String daAn2;
+    private String daAn3;
+    private String daAn4;
+
 }
